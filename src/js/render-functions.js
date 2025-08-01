@@ -5,12 +5,17 @@ const galleryContainer = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 const loadMoreBtn = document.querySelector('.load-more');
 
-let lightbox = new SimpleLightbox('.gallery a');
+let lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
+function refreshLightbox() {
+  if (lightbox) lightbox.refresh();
+}
 
 export function createGallery(images) {
-  const markup = images
-    .map(
-      img => `
+  const markup = images.map(img => `
     <li class="gallery-item">
       <a href="${img.largeImageURL}">
         <img src="${img.webformatURL}" alt="${img.tags}" />
@@ -22,12 +27,10 @@ export function createGallery(images) {
         <li>⬇️ ${img.downloads}</li>
       </ul>
     </li>
-  `
-    )
-    .join('');
+  `).join('');
 
   galleryContainer.insertAdjacentHTML('beforeend', markup);
-  lightbox.refresh();
+  refreshLightbox(); // ✅ apel intern
 }
 
 export function clearGallery() {
@@ -42,24 +45,12 @@ export function hideLoader() {
   loader.classList.remove('visible');
 }
 
-
 export function showLoadMoreButton() {
-  const btn = document.querySelector('.load-more');
-  if (btn) {
-    btn.style.display = 'block';
-  }
+  loadMoreBtn.style.display = 'block';
 }
 
 export function hideLoadMoreButton() {
-  const btn = document.querySelector('.load-more');
-  if (btn) {
-    btn.style.display = 'none';
-  }
-}
-
-
-export function refreshLightbox() {
-  if (lightbox) lightbox.refresh();
+  loadMoreBtn.style.display = 'none';
 }
 
 export function scrollPage() {
