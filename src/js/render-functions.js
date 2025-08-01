@@ -30,7 +30,7 @@ export function createGallery(images) {
   `).join('');
 
   galleryContainer.insertAdjacentHTML('beforeend', markup);
-  refreshLightbox(); // ✅ apel intern
+  refreshLightbox(); 
 }
 
 export function clearGallery() {
